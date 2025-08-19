@@ -55,13 +55,6 @@ class Todo {
   getView() {
     this._todoElement = this._getTemplate();
     this._todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
-    //   .querySelector(".todo")
-    //   .cloneNode(true);
-    // const todoNameEl =
-    // const todoDate = todoElement.querySelector(".todo__date");
-    //
-
-    // todoNameEl.text.content = this._data.name;
 
     this._generateNameEl();
     this._generateDateEl();

@@ -80,21 +80,20 @@ class FormValidator {
 
   resetValidation() {
     this._formEl.reset();
-    if (this._inputList.length === 0) {
+    if (!this._inputList.length) {
       this._inputList = Array.from(
         this._formEl.querySelectorAll(this._inputSelector)
       );
     }
-    this._inputList.forEach((el) => this._hideInputError(el));
     if (!this._buttonElement) {
       this._buttonElement = this._formEl.querySelector(
         this._submitButtonSelector
       );
     }
-    if (this._buttonElement) {
-      this._buttonElement.classList.add(this._inactiveButtonClass);
-      this._buttonElement.disabled = true;
-    }
+
+    this._inputList.forEach((el) => this._hideInputError(el));
+
+    this._toggleButtonState();
   }
 }
 
