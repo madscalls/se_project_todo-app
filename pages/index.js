@@ -8,15 +8,28 @@ const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
-// const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
+
+function handleEscClose(event) {
+  if (event.key === "Escape") {
+    const openPopup = document.querySelector(".popup_visible");
+    if (openPopup) {
+      closeModal(openPopup);
+    }
+  }
+}
 
 //open/close
 const openModal = (modal) => {
-  modal.classList.add("popup_visible");
+  modal.classList.add("popup_visible"); //event listener for esc is added when the popup is opened and removed when its closed
+
+  document.addEventListener("keydown", handleEscClose);
 };
+
 const closeModal = (modal) => {
   modal.classList.remove("popup_visible");
+
+  document.addEventListener("keydown", handleEscClose);
 };
 
 const generateTodo = (data) => {
@@ -67,8 +80,7 @@ addTodoForm.addEventListener("submit", (evt) => {
     id,
     completed: false,
   };
-  const todo = generateTodo(values);
-  renderTodos(values);
+  renderTodo(values);
 
   formValidator.resetValidation();
   closeModal(addTodoPopup);
