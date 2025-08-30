@@ -10,8 +10,8 @@ import TodoCounter from "../components/TodoCounter.js";
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopupEl = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopupEl.querySelector(".popup__form");
-const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
-const todosList = document.querySelector(".todos__list");
+// const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
+// const todosList = document.querySelector(".todos__list");
 
 const todoCounter = new TodoCounter(initialTodos || [], ".counter__text");
 
@@ -23,28 +23,6 @@ const addTodoPopup = new PopupWithForm({
 });
 
 addTodoPopup.setEventListeners();
-
-// function handleEscClose(event) {
-//   if (event.key === "Escape") {
-//     const openPopup = document.querySelector(".popup_visible");
-//     if (openPopup) {
-//       closeModal(openPopup);
-//     }
-//   }
-// }
-
-// open / close;
-// const openModal = (modal) => {
-//   modal.classList.add("popup_visible"); //event listener for esc is added when the popup is opened and removed when its closed
-
-//   document.addEventListener("keydown", handleEscClose);
-// };
-
-// const closeModal = (modal) => {
-//   modal.classList.remove("popup_visible");
-
-//   document.addEventListener("keydown", handleEscClose);
-// };
 
 function handleCheck(isCompleted) {
   todoCounter.updateCompleted(isCompleted);
@@ -91,10 +69,6 @@ addTodoButton.addEventListener("click", () => {
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 formValidator.enableValidation();
 
-// initialTodos.forEach((item) => {
-//   renderTodo(item);
-//}); //use addItem method instead
-
 // submit;
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -118,5 +92,5 @@ addTodoForm.addEventListener("submit", (evt) => {
   renderTodo(values);
 
   formValidator.resetValidation();
-  closeModal(addTodoPopupEl);
+  addTodoPopup.close();
 });
