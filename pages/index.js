@@ -10,19 +10,44 @@ import TodoCounter from "../components/TodoCounter.js";
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopupEl = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopupEl.querySelector(".popup__form");
-// const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
-// const todosList = document.querySelector(".todos__list");
 
 const todoCounter = new TodoCounter(initialTodos || [], ".counter__text");
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-  handleFormSubmit: ({ name, date }) => {
+  handleFormSubmit: (formData) => {
+    const { name, date } = formData;
+
     if (!addTodoForm.checkValidity()) return;
+
+    let dateObject = null;
+    if (date) {
+      let dateObject = new Date(date);
+      dateObject.setMinutes(
+        dateObject.getMinutes() + dateObject.getTimezoneOffset()
+      );
+    }
+    const id = uuidv4();
+
+    const todoData = {
+      name,
+      date: dateObject,
+      id,
+      completed: false,
+    };
+
+    renderTodo(todoData); //adds item and updates total counter
+    formValidator.resetValidation();
+    addTodoPopup.close();
   },
 });
 
 addTodoPopup.setEventListeners();
+
+//open/close popup
+addTodoButton.addEventListener("click", () => {
+  addTodoPopup.open();
+});
 
 function handleCheck(isCompleted) {
   todoCounter.updateCompleted(isCompleted);
@@ -60,37 +85,32 @@ const renderTodo = (item) => {
   todoCounter.updateTotal(true);
 };
 
-//open/close popup
-addTodoButton.addEventListener("click", () => {
-  addTodoPopup.open();
-});
-
 //instantiate
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 formValidator.enableValidation();
 
 // submit;
-addTodoForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
+// addTodoForm.addEventListener("submit", (evt) => {
+//   evt.preventDefault();
 
-  if (!addTodoForm.checkValidity()) return;
+//   if (!addTodoForm.checkValidity()) return;
 
-  const name = evt.target.elements.name.value; //req
-  const dateInput = evt.target.date.value; //optional date
+//   const name = evt.target.elements.name.value; //req
+//   const dateInput = evt.target.date.value; //optional date
 
-  const date = new Date(dateInput);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+//   const date = new Date(dateInput);
+//   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-  const id = uuidv4();
+//   const id = uuidv4();
 
-  const values = {
-    name,
-    date,
-    id,
-    completed: false,
-  };
-  renderTodo(values);
+//   const values = {
+//     name,
+//     date,
+//     id,
+//     completed: false,
+//   };
+//   renderTodo(values);
 
-  formValidator.resetValidation();
-  addTodoPopup.close();
-});
+//   formValidator.resetValidation();
+//   addTodoPopup.close();
+// });

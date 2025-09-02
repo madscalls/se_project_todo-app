@@ -13,7 +13,6 @@ class Popup {
 
   open() {
     this._popupElement.classList.add("popup_visible");
-    this.setEventListeners();
 
     document.addEventListener("keyup", this._handleEscClose);
   }
