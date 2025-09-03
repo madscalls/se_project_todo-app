@@ -22,7 +22,7 @@ const addTodoPopup = new PopupWithForm({
 
     let dateObject = null;
     if (date) {
-      let dateObject = new Date(date);
+      dateObject = new Date(date);
       dateObject.setMinutes(
         dateObject.getMinutes() + dateObject.getTimezoneOffset()
       );

@@ -32,7 +32,7 @@ class Todo {
   _generateDateEl() {
     this._dateEl = this._todoElement.querySelector(".todo__date");
     const dueDate = new Date(this._date);
-    if (!isNaN(dueDate)) {
+    if (!isNaN(dueDate) && this._date) {
       this._dateEl.textContent = `Due: ${dueDate.toLocaleString("en-US", {
         year: "numeric",
         month: "short",
